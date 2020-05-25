@@ -1,25 +1,40 @@
-# Prerequisites
+# Tarrform Plan
+
+## Terrafrom Plan & apply without consent
 ```
-apt-get update
-apt-get install jq wget unzip -y 
+terraform plan
+terraform apply
 ```
 
-# Download Terraform 
+## Create Terraform Build Plan
 ```
- wget https://releases.hashicorp.com/terraform/0.11.12/terraform_0.11.12_linux_amd64.zip -P /root/
-```
-
-# Install Terraform 
-```
-cd /root
-unzip terraform_0.11.12_linux_amd64.zip
-mv terraform /usr/bin/
-chmod +x /usr/bin/terraform
+terraform plan -out Build-Plan
 ```
 
-# Verify Terrform
+## Check Terraform Build Plan
 ```
-terraform --version
+terraform show Build-Plan
+```
+
+## Apply Terraform Build Plan
+```
+terraform apply "Build-Plan"
+```
+
+
+## Create Terraform Destroy Plan
+```
+terraform plan --destroy  -out Destroy-Plan
+```
+
+## Check Terraform Destroy Plan
+```
+terraform show Destroy-Plan
+```
+
+## Apply Terraform Destroy Plan
+```
+terraform apply "Destroy-Plan"
 ```
 
 
