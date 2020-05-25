@@ -1,38 +1,41 @@
-# Tarrform Plan
+# Tarrform Plans
 
-## Terrafrom Plan & apply without consent
+## Build Plan
+### Terrafrom Plan & apply without consent
 ```
 terraform plan
 terraform apply
 ```
 
-## Create Terraform Build Plan
+### Create Terraform Build Plan
 ```
 terraform plan -out Build-Plan
 ```
 
-## Check Terraform Build Plan
+### Check Terraform Build Plan
 ```
 terraform show Build-Plan
 ```
 
-## Apply Terraform Build Plan
+### Apply Terraform Build Plan
 ```
 terraform apply "Build-Plan"
 ```
 
 
-## Create Terraform Destroy Plan
+## Destroy Plan
+
+### Create Terraform Destroy Plan
 ```
 terraform plan --destroy  -out Destroy-Plan
 ```
 
-## Check Terraform Destroy Plan
+###  Check Terraform Destroy Plan
 ```
 terraform show Destroy-Plan
 ```
 
-## Apply Terraform Destroy Plan
+###  Apply Terraform Destroy Plan
 ```
 terraform apply "Destroy-Plan"
 ```
