@@ -8,6 +8,9 @@ mv terraform /usr/bin/
 chmod +x /usr/bin/terraform
 
 
+# Verify Terrform
+terraform --version
+
 
 
 
