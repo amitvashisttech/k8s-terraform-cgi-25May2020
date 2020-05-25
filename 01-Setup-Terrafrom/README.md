@@ -1,4 +1,4 @@
-# Pre-Req
+# Prerequisites
 ```
 apt-get update
 apt-get install jq wget unzip -y 
