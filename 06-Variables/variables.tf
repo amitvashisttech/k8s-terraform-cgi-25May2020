@@ -1,6 +1,6 @@
 provider "aws" {
-  access_key = ""
-  secret_key = ""
+  #access_key = ""
+  #secret_key = ""
   region     = "us-east-1"
 }
 
@@ -11,6 +11,6 @@ variable "zones" {
 resource "aws_instance" "example" {
   count                 = 2
   availability_zone     = "${var.zones[count.index]}"
-  ami                   = "ami-07585467"
+  ami                   = "ami-039a49e70ea773ffc"
   instance_type         = "t2.micro"
 }
