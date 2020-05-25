@@ -107,7 +107,7 @@ output "public_ip" {
 }
 ```
 
-## In the following example will be provsioning two instance with respective providers & into respective avaliablity zones. 
+## In the following example will be provsioning two instance with default variable name: zone ["us-east-1a", "us-east-1b"]
 
 ```
 provider "aws" {
@@ -130,11 +130,27 @@ resource "aws_instance" "example" {
 
 
 
-## Apply Terraform
+## In the plan you can see instances will be provisioned in mentioend AZ ["us-east-1a", "us-east-1b"]
 ```
-terraform apply
+terraform plan
 ```
 
+
+## Input Variable file
+```
+cat var-file-example.tfvars
+zones = ["us-east-1c", "us-east-1d"]
+```
+
+## In this dafault values will be overide & instance will be provsioned in mentioend AZ ["us-east-1c", "us-east-1d"]
+```
+terraform plan -var-file=var-file-example.tfvars
+```
+
+## In this dafault values will be overide & instance will be provsioned in mentioend AZ ["us-east-1b","us-east-1d"]
+```
+terraform plan -var 'zones=["us-east-1b","us-east-1d"]'
+```
 
 ## Destroy Terrafrom
 ```
