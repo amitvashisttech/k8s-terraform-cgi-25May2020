@@ -72,6 +72,12 @@ frontend_ip = 54.84.249.153
 ----
 ```
 
+## Print the Output Values from TfState file
+```
+terraform output backend_ips
+terraform output frontend_ip
+```
+
 
 ## Destroy Terrafrom
 ```
