@@ -1,6 +1,6 @@
 # First Exercise
 
-## Privsion the infrastructure to meet the following conditions:
+## Provision the infrastructure to meet the following conditions:
 
  1. Create 4 Instance each in 2 Regions & print the output of Public & Private IP address
  2. Only 1 Frontend & 1 Backend instance in a single avaliablity zone. 
