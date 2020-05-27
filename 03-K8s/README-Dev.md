@@ -50,105 +50,106 @@ kubectl create -f 04-Deployment/helloworld.yml
 
 ```
 kubectl get deployment
-NAME                    DESIRED   CURRENT   READY   AGE
-helloworld-controller   5         5         2       8s
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+helloworld-deployment   3/3     3            3           3m3s
+```
+
+```
+kubectl get replicaset
+NAME                               DESIRED   CURRENT   READY   AGE
+helloworld-deployment-759fc84489   3         3         3       3m42s
+
 ```
 
 ```
 kubectl get pods
-NAME                          READY   STATUS    RESTARTS   AGE
-helloworld-controller-27z74   1/1     Running   0          18s
-helloworld-controller-f6dgr   1/1     Running   0          18s
-helloworld-controller-k2snd   1/1     Running   0          18s
-helloworld-controller-m86x5   1/1     Running   0          17s
-helloworld-controller-nxnkg   1/1     Running   0          17s
-
+NAME                                     READY   STATUS    RESTARTS   AGE
+helloworld-deployment-759fc84489-94f2t   1/1     Running   0          4m8s
+helloworld-deployment-759fc84489-ltldf   1/1     Running   0          4m8s
+helloworld-deployment-759fc84489-pclvw   1/1     Running   0          4m8s
 ```
 
 ```
-kubectl describe rc helloworld-controller
-Name:         helloworld-controller
-Namespace:    default
-Selector:     app=rc-scaling-pods
-Labels:       app=rc-scaling-pods
-Annotations:  kubectl.kubernetes.io/last-applied-configuration:
-                {"apiVersion":"v1","kind":"ReplicationController","metadata":{"annotations":{},"name":"helloworld-controller","namespace":"default"},"spec... Replicas:     1 current / 1 desired
-Pods Status:  1 Running / 0 Waiting / 0 Succeeded / 0 Failed
+kubectl describe deployment helloworld-deployment
+Name:                   helloworld-deployment
+Namespace:              default
+CreationTimestamp:      Wed, 27 May 2020 11:16:12 +0000
+Labels:                 app=helloworld
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=helloworld
+Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  1 max unavailable, 1 max surge
 Pod Template:
-  Labels:  app=rc-scaling-pods
+  Labels:  app=helloworld
   Containers:
-   rc-scaling-pods:
+   k8s-demo:
     Image:        amitvashist7/k8s-tiny-web
     Port:         80/TCP
     Host Port:    0/TCP
     Environment:  <none>
     Mounts:       <none>
   Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   helloworld-deployment-759fc84489 (3/3 replicas created)
 Events:
-  Type    Reason            Age                From                    Message
-  ----    ------            ----               ----                    -------
-  Normal  SuccessfulCreate  23m                replication-controller  Created pod: helloworld-controller-k2snd
-  Normal  SuccessfulCreate  23m                replication-controller  Created pod: helloworld-controller-f6dgr
-  Normal  SuccessfulCreate  23m                replication-controller  Created pod: helloworld-controller-27z74
-  Normal  SuccessfulCreate  23m                replication-controller  Created pod: helloworld-controller-nxnkg
-  Normal  SuccessfulCreate  23m                replication-controller  Created pod: helloworld-controller-m86x5
-  Normal  SuccessfulDelete  22m                replication-controller  Deleted pod: helloworld-controller-m86x5
-  Normal  SuccessfulDelete  22m                replication-controller  Deleted pod: helloworld-controller-27z74
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  4m54s  deployment-controller  Scaled up replica set helloworld-deployment-759fc84489 to 3
 ```
 
-## Let's Scaleout the Pods from 5 to 10.
+## Let's Scaleout the Pods from 3 to 10.
 ```
-kubectl scale --replicas=10 rc helloworld-controller
+kubectl scale --replicas=10 deployment helloworld-deployment
 ```
 
 ```
 kubectl get pods
-NAME                          READY   STATUS    RESTARTS   AGE
-helloworld-controller-22prs   1/1     Running   0          15s
-helloworld-controller-5bzp2   1/1     Running   0          15s
-helloworld-controller-6jzv8   1/1     Running   0          15s
-helloworld-controller-f6dgr   1/1     Running   0          117s
-helloworld-controller-fclsh   1/1     Running   0          15s
-helloworld-controller-k2snd   1/1     Running   0          117s
-helloworld-controller-kt8w4   1/1     Running   0          15s
-helloworld-controller-lz7j4   1/1     Running   0          15s
-helloworld-controller-nxnkg   1/1     Running   0          116s
-helloworld-controller-wj22v   1/1     Running   0          15s
+NAME                                     READY   STATUS    RESTARTS   AGE
+helloworld-deployment-759fc84489-5n7vs   1/1     Running   0          48s
+helloworld-deployment-759fc84489-5t8sj   1/1     Running   0          48s
+helloworld-deployment-759fc84489-94f2t   1/1     Running   0          7m4s
+helloworld-deployment-759fc84489-bzr75   1/1     Running   0          48s
+helloworld-deployment-759fc84489-cpmdk   1/1     Running   0          48s
+helloworld-deployment-759fc84489-ltldf   1/1     Running   0          7m4s
+helloworld-deployment-759fc84489-nsrh9   1/1     Running   0          48s
+helloworld-deployment-759fc84489-pclvw   1/1     Running   0          7m4s
+helloworld-deployment-759fc84489-rb9nz   1/1     Running   0          48s
+helloworld-deployment-759fc84489-w79wt   1/1     Running   0          48s
 ```
 
 ## Let's ScaleIn the Pods from 10 to 3.
 ```
-kubectl scale --replicas=3 rc helloworld-controller
+kubectl scale --replicas=3 deployment helloworld-deployment
 ```
 
 ```
 kubectl get pods
-NAME                          READY   STATUS    RESTARTS   AGE
-helloworld-controller-f6dgr   1/1     Running   0          84s
-helloworld-controller-k2snd   1/1     Running   0          84s
-helloworld-controller-nxnkg   1/1     Running   0          83s
+NAME                                     READY   STATUS    RESTARTS   AGE
+helloworld-deployment-759fc84489-94f2t   1/1     Running   0          9m21s
+helloworld-deployment-759fc84489-ltldf   1/1     Running   0          9m21s
+helloworld-deployment-759fc84489-pclvw   1/1     Running   0          9m21s
 ```
 
 
 ## Let's try an detele the pod to check deployment in actions
+
 ```
-kubectl get pods
-NAME                          READY   STATUS    RESTARTS   AGE
-helloworld-controller-nxnkg   1/1     Running   0          26m
-```
-```
-kubectl delete pod helloworld-controller-nxnkg
-pod "helloworld-controller-nxnkg" deleted
+kubectl delete pod helloworld-deployment-759fc84489-94f2t helloworld-deployment-759fc84489-lt ldf
+pod "helloworld-deployment-759fc84489-94f2t" deleted
+pod "helloworld-deployment-759fc84489-ltldf" deleted
 ```
 ```
 kubectl get pods
-NAME                          READY   STATUS              RESTARTS   AGE
-helloworld-controller-wzlcv   0/1     ContainerCreating   0          4s
-```
-```
-kubectl get pods
-NAME                          READY   STATUS    RESTARTS   AGE
-helloworld-controller-wzlcv   1/1     Running   0          12s
+NAME                                     READY   STATUS    RESTARTS   AGE
+helloworld-deployment-759fc84489-g4szx   1/1     Running   0          25s
+helloworld-deployment-759fc84489-m9v46   1/1     Running   0          25s
+helloworld-deployment-759fc84489-pclvw   1/1     Running   0          10m
 ```
 
 ## Rolling Updates
