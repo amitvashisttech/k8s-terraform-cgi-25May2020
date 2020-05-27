@@ -43,3 +43,18 @@ NAME                          READY   STATUS    RESTARTS   AGE
 hello-kube-7594d6bc45-4pffj   1/1     Running   0          9m51s
 nodehelloworld                1/1     Running   0          11m
 ``` 
+
+## Delete the Pod & Deployment what we have created.
+```
+# kubectl get pod,deploy
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/hello-kube-7594d6bc45-4pffj   1/1     Running   0          155m
+pod/nodehelloworld                1/1     Running   0          157m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/hello-kube   1/1     1            1           155m
+
+
+# kubectl delete pod,deploy --all
+```
+
