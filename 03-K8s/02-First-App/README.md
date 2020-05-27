@@ -1,0 +1,40 @@
+## Let run our first deployment with command line. 
+
+```
+kubectl run k8s-get-started --image=amitvashist7/k8s-tiny-web  --port=80
+``` 
+
+## Check status. 
+
+```
+kubectl get pods
+``` 
+
+
+## Let run our first pod with yaml file definition: 
+
+```
+cd k8s-terraform-cgi-25May2020/03-K8s/02-First-App
+cat helloworld.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodehelloworld
+  labels:
+    app: helloworld
+spec:
+  containers:
+  - name: k8s-demo
+    image: amitvashist7/k8s-tiny-web
+    ports:
+    - name: nodejs-port
+      containerPort: 80
+
+kubectl create -f  helloworld.yml
+```
+
+## Check status. 
+
+```
+kubectl get pods
+``` 
