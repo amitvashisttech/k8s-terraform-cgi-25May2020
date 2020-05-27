@@ -14,8 +14,10 @@ kubectl get pods
 ## Let run our first pod with yaml file definition: 
 
 ```
-cd k8s-terraform-cgi-25May2020/03-K8s/02-First-App
-cat helloworld.yml
+# cd k8s-terraform-cgi-25May2020/03-K8s/02-First-App
+
+
+# cat helloworld.yml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -30,11 +32,14 @@ spec:
     - name: nodejs-port
       containerPort: 80
 
-kubectl create -f  helloworld.yml
+# kubectl create -f  helloworld.yml
 ```
 
 ## Check status. 
 
 ```
-kubectl get pods
+# kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+hello-kube-7594d6bc45-4pffj   1/1     Running   0          9m51s
+nodehelloworld                1/1     Running   0          11m
 ``` 
