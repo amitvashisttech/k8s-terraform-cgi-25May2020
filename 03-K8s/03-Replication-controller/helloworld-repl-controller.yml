@@ -5,14 +5,14 @@ metadata:
 spec:
   replicas: 5
   selector:
-    app: docker-get-started
+    app: rc-scaling-pods
   template:
     metadata:
       labels:
-        app: docker-get-started
+        app: rc-scaling-pods
     spec:
       containers:
-      - name: docker-get-started
+      - name: rc-scaling-pods
         image: amitvashist7/k8s-tiny-web
         ports:
         - name: nodejs-port
