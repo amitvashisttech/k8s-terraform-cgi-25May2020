@@ -23,8 +23,10 @@ EOF
 apt-get update
 apt-get install -y kubelet=1.13.5-00 kubeadm=1.13.5-00 kubectl=1.13.5-00
 
+
+# Note: Please check your Master Machine Routeable IP Address & Update the same in front of --apiserver-advertise-address="YourMasterIP"
 echo "Deploying Kubernetes (with calico)..."
-kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address="172.31.0.100" 
+kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address="172.31.0.10" 
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
 # DigitalOcean without firewall (IP-in-IP allowed) - or any other cloud / on-prem that supports IP-in-IP traffic
