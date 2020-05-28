@@ -39,7 +39,7 @@ Kubernetes assigns this Service an IP address (sometimes called the “cluster I
 
 The controller for the Service selector continuously scans for Pods that match its selector, and then POSTs any updates to an Endpoint object also named “my-service”.
 
-Note: A Service can map any incoming port to a targetPort. By default and for convenience, the targetPort is set to the same value as the port field.
+***Note: A Service can map any incoming port to a targetPort. By default and for convenience, the targetPort is set to the same value as the port field.***
 
 Port definitions in Pods have names, and you can reference these names in the targetPort attribute of a Service. This works even if there is a mixture of Pods in the Service using a single configured name, with the same network protocol available via different port numbers. This offers a lot of flexibility for deploying and evolving your Services. For example, you can change the port numbers that Pods expose in the next version of your backend software, without breaking clients.
 
