@@ -327,21 +327,95 @@ curl worker1:31702
 
 
 ## Rollback 
-
-
-
-## Rollback to revsion version
-### Check the version history
-
-### Revsion Version Record
-
-## How to delete the Deployment
+### Rollback to last Version / Undo the deployment
 ```
-kubectl get rc
-NAME                    DESIRED   CURRENT   READY   AGE
-helloworld-controller   1         1         1       29m
+kubectl rollout undo  deployment helloworld-deployment
 ```
 ```
-kubectl delete rc helloworld-controller
-replicationcontroller "helloworld-controller" deleted
+kubectl rollout status deployment helloworld-deployment
+Waiting for deployment "helloworld-deployment" rollout to finish: 4 of 5 updated replicas are available...
+deployment "helloworld-deployment" successfully rolled out
 ```
+```
+curl worker2:31702
+<html>
+<body>
+<h1>Hello World</h1>
+<h3>Tiny Web Server</h3>
+<h5>Version: v3</h5>
+</body>
+</html>
+```
+
+### Check Deployment Version Cantrol history
+```
+kubectl rollout history  deployment helloworld-deployment
+deployment.extensions/helloworld-deployment
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+5         <none>
+6         kubectl set image deployment helloworld-deployment k8s-demo=amitvashist7/k8s-tiny-web:4 --record=true
+```
+
+
+### Review the specify Revision Version Record
+```
+ kubectl rollout history  deployment helloworld-deployment --revision=1
+deployment.extensions/helloworld-deployment with revision #7
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=759fc84489
+  Containers:
+   k8s-demo:
+    Image:      amitvashist7/k8s-tiny-web
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+```
+
+### Rollback to a Specific Version / Undo the deployment
+```
+kubectl rollout undo  deployment helloworld-deployment --to-revision=1
+deployment.extensions/helloworld-deployment rolled back
+
+```
+```
+kubectl rollout status deployment helloworld-deployment
+Waiting for deployment "helloworld-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "helloworld-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+```
+```
+curl worker2:31702
+<html>
+<body>
+<h1>Hello World</h1>
+<h3>Tiny Web Server</h3>
+</body>
+</html>
+```
+
+
+## How to delete the Deployment & associated Service
+### Deployment Deletion
+```
+kubectl delete -f 04-Deployment/helloworld.yml
+deployment.extensions "helloworld-deployment" deleted
+```
+
+###  Service Deletion
+```
+kubectl get svc
+NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+helloworld-deployment   NodePort    10.109.13.14   <none>        80:31702/TCP   17h
+kubernetes              ClusterIP   10.96.0.1      <none>        443/TCP        23h
+```
+```
+kubectl delete svc helloworld-deployment
+service "helloworld-deployment" deleted
+```
+
