@@ -45,23 +45,105 @@ Port definitions in Pods have names, and you can reference these names in the ta
 
 ## Create Service
 ### First will deploy a helloworld "Tiny Web" Pod / Deployment. 
+```
+cd k8s-terraform-cgi-25May2020/
+kubeclt create -f 03-K8s/05-App-with-Service/helloworld.yml
+```
 
-### Create Service 
+
+### Create Service
+```
+# cat 03-K8s/05-App-with-Service/helloworld-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  ports:
+  - port: 80
+    targetPort: nodejs-port
+    protocol: TCP
+  selector:
+    app: helloworld
+  type: LoadBalancer
+```
+
+
+```
+kubeclt create -f 03-K8s/05-App-with-Service/helloworld-service.yml
+```
+
+### Service Status
+```
+kubeclt get svc 
+```
+
+### Try to access the deployment via Service IP & NodePort combination. 
+```
+curl worker1:32769
+```
 
 ### Second will deploy Python-Web App Pod. 
+```
+kubeclt create -f 03-K8s/05-App-with-Service/helloworld-service.yml
+```
+```
+kubectl get pods 
+```
 
 ### Third will deploy Tomcat-App Pod. 
+```
+kubeclt create -f 03-K8s/05-App-with-Service/helloworld-tomcat.yaml
+```
+```
+kubectl get pods
+NAME            READY   STATUS    RESTARTS   AGE
+python-webapp   1/1     Running   0          102s
+tiny-webapp     1/1     Running   0          48s
+tomcat-app      1/1     Running   0          101s
+```
 
 ### Describe the Service & Pod IP Address. 
 If you notice all the Pod has been configured as endpoint for helloworld service become we have used the same selector for all my POD Deployment & Target port also with the abstracted name nodejs-port. 
 
+```
+kubectl get svc
+NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+helloworld-service   LoadBalancer   10.0.11.133   35.192.44.187   80:31360/TCP   72s
+kubernetes           ClusterIP      10.0.0.1      <none>          443/TCP        7m4s
+```
 
-# How to delete the Deployment & associated Service
+```
+kubectl  describe svc helloworld-service
+Name:                     helloworld-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              Selector:  app=helloworld
+Type:                     LoadBalancer
+IP:                       10.0.15.22
+LoadBalancer Ingress:     35.225.54.208
+Port:                     <unset>  80/TCP
+TargetPort:               myapp-port/TCP
+NodePort:                 <unset>  31619/TCP
+Endpoints:                10.32.0.7:80,10.32.1.10:80,10.32.2.4:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason                Age                   From                Message
+  ----    ------                ----                  ----                -------
+  Normal  EnsuringLoadBalancer  104s (x2 over 2m36s)  service-controller  Ensuring load balancer
+  Normal  EnsuredLoadBalancer   96s (x2 over 115s)    service-controller  Ensured load balancer
+
+```
+
+## How to delete the Deployment & associated Service
 
 ### Deployment Deletion
 ```
+kubectl delete -f 05-App-with-Service/
+pod "python-webapp" deleted
+service "helloworld-service" deleted
+pod "tomcat-app" deleted
+pod "tiny-webapp" deleted
 ```
 
-### Service Deletion
-```
-```
