@@ -266,3 +266,117 @@
   266  cd ..
   267  ls
   268  history > Day4_history.txt
+  269  cd ..
+  270  git add .; git commit -m "Python-webapp"; git push 
+  271  git 
+  272  git pull
+  273  ls
+  274  cd 03-K8s/
+  275  ls
+  276  cd 07-HealthChecks/
+  277  ls
+  278  cat helloworld-healthcheck-http.yml 
+  279  kubectl create -f helloworld-healthcheck-http.yml 
+  280  kubectl get pods 
+  281  kubectl delete deploy helloworld-deployment-2
+  282  kubectl get pods 
+  283  kubectl describe pod helloworld-deployment-7c6f554f6d-4gwq9
+  284  ls
+  285  kubectl get pods 
+  286  kubectl expose deploy helloworld-deployment --type=NodePort
+  287  kubectl get svc 
+  288  curl worker1:32273
+  289  curl worker1:32273/
+  290  curl worker1:32273/amitvashist
+  291  kubectl get pods 
+  292  kubectl edit deploy helloworld-deployment 
+  293  kubectl get pods
+  294  kubectl describe pod helloworld-deployment-64cbd7875b-429pk
+  295  kubectl get pods
+  296  kubectl describe pod helloworld-deployment-64cbd7875b-429pk
+  297  kubectl edit deploy helloworld-deployment 
+  298  ls
+  299  kubectl apply -f helloworld-healthcheck-http.yml 
+  300  kubectl get pods
+  301  kubectl describe pod helloworld-deployment-7c6f554f6d-l56ld
+  302  ls
+  303  vim helloworld-healthcheck-exec.yml 
+  304  ls
+  305  kubectl apply -f helloworld-healthcheck-exec.yml 
+  306  kubectl get pods 
+  307  kubectl describe pod liveness-exec
+  308  kubectl get pods 
+  309  kubectl delete -f helloworld-healthcheck-* 
+  310  kubectl delete -f helloworld-healthcheck-cd ..
+  311  ls
+  312  cd ..
+  313  ls
+  314  kubectl delete -f 07-HealthChecks/
+  315  ls
+  316  cd ..
+  317  git pull
+  318  ls
+  319  cd 03-K8s/
+  320  ls
+  321  cd 08-Secrets/
+  322  ls
+  323  echo -n "amitvashist" > ./username.txt
+  324  echo -n "Password@1234!" > ./password.txt
+  325  cat username.txt 
+  326  cat password.txt 
+  327  vim username.txt 
+  328  cat username.txt 
+  329  vim username.txt 
+  330  cat username.txt 
+  331  kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt 
+  332  kubectl get secrets
+  333  kubectl describe secrets db-user-pass
+  334  ls
+  335  cat helloworld-secrets.yml 
+  336  cat helloworld-secrets-volumes.yml 
+  337  ls
+  338  echo -n "Password@1234!" |base64 
+  339  echo -n "amitvashist7" |base64 
+  340  vi helloworld-secrets.yml 
+  341  echo -n "amitvashist7" |base64 
+  342  vi helloworld-secrets.yml 
+  343  echo -n "Password@1234!" |base64 
+  344  vi helloworld-secrets.yml 
+  345  ls
+  346  kubectl create -f helloworld-secrets.yml 
+  347  kubectl get secrets 
+  348  ls
+  349  vim helloworld-secrets-volumes.yml 
+  350  ls
+  351  kubectl create -f helloworld-secrets-volumes.yml 
+  352  kubectl get pods 
+  353  kubectl describe pod helloworld-deployment-7c4677c78f-7dz5t
+  354  kubectl get pods 
+  355  kubectl exec -it helloworld-deployment-7c4677c78f-7dz5t -- /bin/sh
+  356  ls
+  357  rm -rf password.txt username.txt 
+  358  ls
+  359  kubectl get api-resources
+  360  kubectl get api-resource
+  361  kubectl get api-versions
+  362  kubectl  api-versions
+  363  kubectl  api-resources
+  364  cat /root/.kube/config 
+  365  ls
+  366  cd ..
+  367  ls
+  368  kubectl create -f 09-Wordpress/wordpress-secrets.yml 
+  369  kubectl create -f 09-Wordpress/
+  370  ls
+  371  cd 09-Wordpress/
+  372  ls
+  373  vim wordpress-single-deployment-no-volumes.yml 
+  374  kubectl get pods 
+  375  kubectl describe pod wordpress-deployment-6958b7b48f-bkdht
+  376  kubectl get svc 
+  377  kubectl get pods -o wide 
+  378  kubectl exec -it wordpress-deployment-6958b7b48f-bkdht -c mysql -- mysql -u root -p 
+  379  ls
+  380  cd ..
+  381  ls
+  382  history > Day4_history.txt 
