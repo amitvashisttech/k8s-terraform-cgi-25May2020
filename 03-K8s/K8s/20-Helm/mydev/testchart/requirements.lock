@@ -1,0 +1,9 @@
+dependencies:
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 7.4.2
+- name: wordpress
+  repository: https://charts.bitnami.com/bitnami
+  version: 9.3.3
+digest: sha256:953d626bd35b8ea30f2ea1a6b955ce58df759a000d447b545250d99d355b864e
+generated: "2020-05-22T17:28:49.759551424+05:30"
