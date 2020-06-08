@@ -1,4 +1,4 @@
-# Tarrform Providers
+# Terraform Providers
 
 Providers are generally form infrastructure service or software service services.
 
